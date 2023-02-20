@@ -1,46 +1,62 @@
+// action types
+const ADD = 'score/add';
+const REMOVE = 'score/remove';
+const INCREMENT = 'score/increment';
+const DECREMENT = 'score/decrement';
+const RESET = 'score/reset';
+
 // initial state
 const initialState = [{ id: 1, score: 0 }];
 
 // create reducer function
 function scoreReducer(state = initialState, action) {
 	// action.type is the action that we dispatch
-	if (action.type === 'increment') {
-		const updatedScore = state.map((match) => {
-			if (match.id === action.payload.id) {
+	switch (action.type) {
+		case ADD:
+			return [...state, { id: state.length + 1, score: 0 }];
+
+		// filter out the match with the id that we want to remove
+		case REMOVE:
+			return state.filter((match) => match.id !== action.payload.id);
+
+		// increment the score by the value that we pass in
+		case INCREMENT:
+			return state.map((match) => {
+				if (match.id === action.payload.id) {
+					return {
+						...match,
+						score: match.score + action.payload.value,
+					};
+				} else {
+					return match;
+				}
+			});
+
+		// decrement the score by the value that we pass in
+		case DECREMENT:
+			return state.map((match) => {
+				if (match.id === action.payload.id) {
+					return {
+						...match,
+						score: match.score >= action.payload.value ? match.score - action.payload.value : 0,
+					};
+				} else {
+					return match;
+				}
+			});
+
+		// reset the score to 0
+		case RESET:
+			return state.map((match) => {
 				return {
 					...match,
-					score: match.score + action.payload.value,
+					score: 0,
 				};
-			} else {
-				return match;
-			}
-		});
-		return updatedScore;
-	} else if (action.type === 'decrement') {
-		const updatedScore = state.map((match) => {
-			if (match.id === action.payload.id) {
-				return {
-					...match,
-					score: match.score >= action.payload.value ? match.score - action.payload.value : 0,
-				};
-			} else {
-				return match;
-			}
-		});
-		return updatedScore;
-	} else if (action.type === 'add') {
-		return [...state, { id: state.length + 1, score: 0 }];
-	} else if (action.type === 'remove') {
-		return state.filter((match) => match.id !== action.payload.id);
-	} else if (action.type === 'reset') {
-		return state.map((match) => {
-			return {
-				...match,
-				score: 0,
-			};
-		});
-	} else {
-		return state;
+			});
+
+		// return the state if no action is passed
+		default:
+			return state;
 	}
 }
 
@@ -62,7 +78,7 @@ function addEventListenerToElements() {
 
 			// dispatch action
 			store.dispatch({
-				type: 'increment',
+				type: INCREMENT,
 				payload: { id, value },
 			});
 		});
@@ -77,7 +93,7 @@ function addEventListenerToElements() {
 
 			// dispatch action
 			store.dispatch({
-				type: 'decrement',
+				type: DECREMENT,
 				payload: { id, value },
 			});
 		});
@@ -89,7 +105,7 @@ function addEventListenerToElements() {
 			const id = parseInt(deleteBtn.dataset.id);
 			// dispatch action
 			store.dispatch({
-				type: 'remove',
+				type: REMOVE,
 				payload: { id },
 			});
 		});
@@ -144,12 +160,12 @@ store.subscribe(render);
 const lwsAddMatch = document.querySelector('.lws-addMatch');
 lwsAddMatch.addEventListener('click', () => {
 	// dispatch action
-	store.dispatch({ type: 'add' });
+	store.dispatch({ type: ADD });
 });
 
 // event listener to reset button
 const lwsReset = document.querySelector('.lws-reset');
 lwsReset.addEventListener('click', () => {
 	// dispatch action
-	store.dispatch({ type: 'reset' });
+	store.dispatch({ type: RESET });
 });
