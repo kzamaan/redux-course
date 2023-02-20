@@ -1,6 +1,3 @@
-// select dom matches container
-const allMatches = document.querySelector('.all-matches');
-
 // initial state
 const initialState = [{ id: 1, score: 0 }];
 
@@ -50,47 +47,6 @@ function scoreReducer(state = initialState, action) {
 // create store
 const store = Redux.createStore(scoreReducer);
 
-// create render function
-const render = () => {
-	const state = store.getState();
-	const matchesDOM = state
-		.map((match, index) => {
-			return `
-                <div class="match">
-                    <div class="wrapper">
-                        <button class="lws-delete" data-id="${match.id}">
-                            <img src="./image/delete.svg" alt="remove" />
-                        </button>
-                        <h3 class="lws-matchName">Match ${index + 1}</h3>
-                    </div>
-                    <div class="inc-dec">
-                        <form class="incrementForm">
-                            <h4>Increment</h4>
-                            <input type="number" name="increment" class="lws-increment" data-id="${match.id}" />
-                        </form>
-                        <form class="decrementForm">
-                            <h4>Decrement</h4>
-                            <input type="number" name="decrement" class="lws-decrement" data-id="${match.id}"/>
-                        </form>
-                    </div>
-                    <div class="numbers">
-                        <h2 class="lws-singleResult">${match.score}</h2>
-                    </div>
-                </div>
-            `;
-		})
-		.join('');
-
-	allMatches.innerHTML = matchesDOM;
-	addEventListenerToElements();
-};
-
-// update UI initially
-render();
-
-// subscribe to store
-store.subscribe(render);
-
 // event listener to increment and decrement score
 function addEventListenerToElements() {
 	const incrementForm = document.querySelectorAll('.incrementForm');
@@ -139,6 +95,50 @@ function addEventListenerToElements() {
 		});
 	});
 }
+
+// select dom matches container
+const allMatches = document.querySelector('.all-matches');
+
+// create render function
+const render = () => {
+	const state = store.getState();
+	const matchesDOM = state
+		.map((match, index) => {
+			return `
+                <div class="match">
+                    <div class="wrapper">
+                        <button class="lws-delete" data-id="${match.id}">
+                            <img src="./image/delete.svg" alt="remove" />
+                        </button>
+                        <h3 class="lws-matchName">Match ${index + 1}</h3>
+                    </div>
+                    <div class="inc-dec">
+                        <form class="incrementForm">
+                            <h4>Increment</h4>
+                            <input type="number" name="increment" class="lws-increment" data-id="${match.id}" />
+                        </form>
+                        <form class="decrementForm">
+                            <h4>Decrement</h4>
+                            <input type="number" name="decrement" class="lws-decrement" data-id="${match.id}" />
+                        </form>
+                    </div>
+                    <div class="numbers">
+                        <h2 class="lws-singleResult">${match.score}</h2>
+                    </div>
+                </div>
+            `;
+		})
+		.join('');
+
+	allMatches.innerHTML = matchesDOM;
+	addEventListenerToElements();
+};
+
+// update UI initially
+render();
+
+// subscribe to store
+store.subscribe(render);
 
 // event listener to add match button
 const lwsAddMatch = document.querySelector('.lws-addMatch');
