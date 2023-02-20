@@ -6,6 +6,7 @@ const initialState = [{ id: 1, score: 0 }];
 
 // create reducer function
 function scoreReducer(state = initialState, action) {
+	// action.type is the action that we dispatch
 	if (action.type === 'increment') {
 		const updatedScore = state.map((match) => {
 			if (match.id === action.payload.id) {
@@ -30,9 +31,9 @@ function scoreReducer(state = initialState, action) {
 			}
 		});
 		return updatedScore;
-	} else if (action.type === 'addMatch') {
+	} else if (action.type === 'add') {
 		return [...state, { id: state.length + 1, score: 0 }];
-	} else if (action.type === 'removeMatch') {
+	} else if (action.type === 'remove') {
 		return state.filter((match) => match.id !== action.payload.id);
 	} else if (action.type === 'reset') {
 		return state.map((match) => {
@@ -102,13 +103,11 @@ function addEventListenerToElements() {
 			e.preventDefault();
 			const id = parseInt(e.target.elements.increment.dataset.id);
 			const value = parseInt(e.target.elements.increment.value);
-			console.log('increment', id, value);
+
+			// dispatch action
 			store.dispatch({
 				type: 'increment',
-				payload: {
-					id,
-					value,
-				},
+				payload: { id, value },
 			});
 		});
 	});
@@ -119,26 +118,22 @@ function addEventListenerToElements() {
 			e.preventDefault();
 			const id = parseInt(e.target.elements.decrement.dataset.id);
 			const value = parseInt(e.target.elements.decrement.value);
-			console.log('decrement', id, value);
+
+			// dispatch action
 			store.dispatch({
 				type: 'decrement',
-				payload: {
-					id,
-					value,
-				},
+				payload: { id, value },
 			});
 		});
 	});
 
 	// delete match event listener
 	lwsDeletes.forEach((deleteBtn) => {
-		deleteBtn.addEventListener('click', (e) => {
-			console.log(deleteBtn);
+		deleteBtn.addEventListener('click', () => {
 			const id = parseInt(deleteBtn.dataset.id);
-			console.log('delete', id);
-
+			// dispatch action
 			store.dispatch({
-				type: 'removeMatch',
+				type: 'remove',
 				payload: { id },
 			});
 		});
@@ -148,11 +143,13 @@ function addEventListenerToElements() {
 // event listener to add match button
 const lwsAddMatch = document.querySelector('.lws-addMatch');
 lwsAddMatch.addEventListener('click', () => {
-	store.dispatch({ type: 'addMatch' });
+	// dispatch action
+	store.dispatch({ type: 'add' });
 });
 
 // event listener to reset button
 const lwsReset = document.querySelector('.lws-reset');
 lwsReset.addEventListener('click', () => {
+	// dispatch action
 	store.dispatch({ type: 'reset' });
 });
