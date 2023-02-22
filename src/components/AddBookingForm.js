@@ -47,8 +47,10 @@ export default function AddBookingForm() {
 		}
 
 		// check if journey date is valid
-		const today = new Date();
-		const journeyDateObj = new Date(journeyDate);
+		const today = new Date(new Date().toDateString()).getTime();
+		const journeyDateObj = new Date(new Date(journeyDate).toDateString()).getTime();
+
+		console.log(journeyDateObj, today);
 		if (journeyDateObj < today) {
 			alert('Please select a valid journey date.');
 			return;
