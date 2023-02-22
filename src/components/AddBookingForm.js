@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addBooking } from './../redux/booking/actions';
 
 export default function AddBookingForm() {
+	// store methods
 	const dispatch = useDispatch();
 	const bookingList = useSelector((state) => state);
 
@@ -175,7 +176,11 @@ export default function AddBookingForm() {
 						</div>
 					</div>
 
-					<button className="addCity" type="submit" id="lws-addCity" disabled={bookingList.length > 2}>
+					<button
+						className={`addCity ${bookingList.length > 2 ? 'disabled' : ''}`}
+						type="submit"
+						id="lws-addCity"
+						disabled={bookingList.length > 2}>
 						<svg
 							width="15px"
 							height="15px"

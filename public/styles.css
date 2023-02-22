@@ -708,7 +708,7 @@ video {
 }
 
 body {
-	background-image: url(./assets/Hero-Banner.webp);
+	background-image: url(./img/Hero-Banner.webp);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 50% 40%;
