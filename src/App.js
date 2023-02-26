@@ -1,6 +1,6 @@
 import Navbar from './components/Navbar';
 import Cart from './pages/Cart';
-import Product from './pages/Product';
+import ProductList from './pages/ProductList';
 
 import { useSelector } from 'react-redux';
 
@@ -10,7 +10,7 @@ function App() {
 	return (
 		<div className="App">
 			<Navbar />
-			<main className="py-16">{currentPage === 'product' ? <Product /> : <Cart />}</main>
+			<main className="py-16">{currentPage === 'product' ? <ProductList /> : <Cart />}</main>
 		</div>
 	);
 }
