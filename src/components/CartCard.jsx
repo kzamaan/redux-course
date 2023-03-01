@@ -39,7 +39,6 @@ export default function CartCard({ cart }) {
 
 	const handleRemoveCartItem = (cart) => {
 		const { id, quantity, product } = cart;
-		console.log(quantity);
 		dispatch(
 			adjustStock({
 				productId: product.id,
