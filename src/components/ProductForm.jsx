@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { added } from '../redux/product/actions';
 
 export default function ProductForm() {
 	const dispatch = useDispatch();
-	const products = useSelector((state) => state.products);
-	console.log('product from');
-
+	// product state
 	const [productName, setProductName] = useState('');
 	const [category, setCategory] = useState('');
-	const [imageUrl, setImageUrl] = useState(
-		`https://i.dummyjson.com/data/products/${products.length + 1}/thumbnail.jpg`
-	);
+	const [imageUrl, setImageUrl] = useState('');
 	const [price, setPrice] = useState('');
 	const [quantity, setQuantity] = useState('');
 
+	// reset form
+	const resetProductForm = () => {
+		setProductName('');
+		setCategory('');
+		setImageUrl('');
+		setPrice('');
+		setQuantity('');
+	};
+
+	// add product handler
 	const handleProductSubmit = (e) => {
 		e.preventDefault();
-
+		// action dispatch
 		dispatch(
 			added({
 				productName,
@@ -27,9 +33,10 @@ export default function ProductForm() {
 				quantity
 			})
 		);
-
-		setImageUrl(`https://i.dummyjson.com/data/products/${products.length + 1}/thumbnail.jpg`);
+		// after product added then empty form
+		resetProductForm();
 	};
+
 	return (
 		<div className="formContainer">
 			<h4 className="formTitle">Add New Product</h4>

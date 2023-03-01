@@ -5,13 +5,12 @@ import { toggledPages } from './../redux/config/actions';
 
 export default function Navbar() {
 	const dispatch = useDispatch();
-	const config = useSelector((state) => state.config);
-	console.log(config);
+	const carts = useSelector((state) => state.cart);
+	const totalCartItems = carts.reduce((total, cart) => total + cart.quantity, 0);
 
-	const handleTogglePage = (e) => {
+	// toggle home page and cart page
+	const handleTogglePage = (e, page) => {
 		e.preventDefault();
-		const { currentPage } = config;
-		const page = currentPage === 'product' ? 'cart' : 'product';
 		dispatch(toggledPages(page));
 	};
 
@@ -23,12 +22,12 @@ export default function Navbar() {
 				</a>
 
 				<div className="flex gap-4">
-					<a href="/" className="navHome" id="lws-home">
+					<a href="/" onClick={(e) => handleTogglePage(e, 'product')} className="navHome" id="lws-home">
 						Home
 					</a>
-					<a href="cart.html" onClick={handleTogglePage} className="navCart" id="lws-cart">
+					<a href="cart.html" onClick={(e) => handleTogglePage(e, 'cart')} className="navCart" id="lws-cart">
 						<i className="text-xl fa-sharp fa-solid fa-bag-shopping"></i>
-						<span id="lws-totalCart">0</span>
+						<span id="lws-totalCart">{totalCartItems}</span>
 					</a>
 				</div>
 			</div>
