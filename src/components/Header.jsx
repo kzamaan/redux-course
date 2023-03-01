@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import notesImages from './../assets/images/notes.png';
 import plusImage from './../assets/images/plus.png';
 import doubleImage from './../assets/images/double-tick.png';
-import { added, clearCompleted, allCompleted } from '../redux/todos/actions';
+import { clearCompleted, allCompleted } from '../redux/todos/actions';
+import addTodo from '../redux/thunk/addTodo';
 
 export default function Navbar() {
 	const dispatch = useDispatch();
@@ -16,7 +17,7 @@ export default function Navbar() {
 			alert('Todo field must not be empty!');
 			return;
 		}
-		dispatch(added(todoText));
+		dispatch(addTodo(todoText));
 		setTodoText('');
 	};
 
