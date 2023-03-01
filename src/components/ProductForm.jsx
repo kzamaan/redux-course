@@ -4,7 +4,7 @@ import { added } from '../redux/product/actions';
 
 export default function ProductForm() {
 	const dispatch = useDispatch();
-	//// define local state
+	// define local state
 	const [productName, setProductName] = useState('');
 	const [category, setCategory] = useState('');
 	const [imageUrl, setImageUrl] = useState('');
