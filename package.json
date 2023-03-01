@@ -1,0 +1,15 @@
+{
+	"name": "lession-1",
+	"version": "1.0.0",
+	"description": "redux",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Zaman",
+	"license": "MIT",
+	"dependencies": {
+		"node-fetch": "^2.6.9",
+		"redux": "^4.2.1"
+	}
+}
