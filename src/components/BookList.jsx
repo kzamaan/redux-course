@@ -37,9 +37,11 @@ export default function BookList() {
 
 	return (
 		<div className="lws-bookContainer">
-			{bookList.map((book) => (
-				<BookCard key={book.id} book={book} />
-			))}
+			{bookList.length > 0 ? (
+				bookList.map((book) => <BookCard key={book.id} book={book} />)
+			) : (
+				<div>No book found!</div>
+			)}
 		</div>
 	);
 }
