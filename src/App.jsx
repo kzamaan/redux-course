@@ -1,8 +1,18 @@
 import BookList from './components/BookList';
 import Header from './components/Header';
 import NewBookForm from './components/NewBookForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { filteringBook } from './redux/books/actions';
 
 function App() {
+	const dispatch = useDispatch();
+	const { category } = useSelector((state) => state.books);
+
+	// category filtering
+	const categoryFiltering = (type) => {
+		dispatch(filteringBook(type));
+	};
+
 	return (
 		<div className="App">
 			<Header />
@@ -14,10 +24,16 @@ function App() {
 							<h4 className="mt-2 text-xl font-bold">Book List</h4>
 
 							<div className="flex items-center space-x-4">
-								<button className="filter-btn active-filter" id="lws-filterAll">
+								<button
+									className={`filter-btn ${category === 'all' && 'active-filter'}`}
+									id="lws-filterAll"
+									onClick={() => categoryFiltering('all')}>
 									All
 								</button>
-								<button className="filter-btn" id="lws-filterFeatured">
+								<button
+									className={`filter-btn ${category === 'featured' && 'active-filter'}`}
+									id="lws-filterFeatured"
+									onClick={() => categoryFiltering('featured')}>
 									Featured
 								</button>
 							</div>

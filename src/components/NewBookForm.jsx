@@ -1,29 +1,74 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { editBook } from '../redux/books/actions';
+import addBook from '../redux/books/thunk/addBook';
+import updateBook from '../redux/books/thunk/updateBook';
 
 export default function NewBookForm() {
+	const dispatch = useDispatch();
+	const { editableBook } = useSelector((state) => state.books);
 	// define local state
 	const [bookName, setBookName] = useState('');
 	const [author, setAuthor] = useState('');
-	const [imageUrl, setImageUrl] = useState('');
+	const [thumbnail, setThumbnail] = useState('');
 	const [price, setPrice] = useState('');
 	const [rating, setRating] = useState('');
 	const [featured, setFeatureBook] = useState('');
 
+	// after submit form reset all input field
+	const bookResetHandler = () => {
+		setBookName('');
+		setAuthor('');
+		setThumbnail('');
+		setPrice('');
+		setRating('');
+		setFeatureBook('');
+	};
+
+	// update book handler
+	const updateBookHandler = (bookId, bookObject) => {
+		dispatch(updateBook(bookId, bookObject));
+		dispatch(editBook({}));
+	};
+
+	// added book handler
 	const addBookHandler = (e) => {
 		e.preventDefault();
-		console.log({
-			bookName,
+
+		const bookObject = {
+			name: bookName,
 			author,
-			imageUrl,
+			thumbnail,
 			price,
 			rating,
-			featured
-		});
+			featured: featured ? true : false
+		};
+
+		if (editableBook.id) {
+			updateBookHandler(editableBook.id, bookObject);
+		} else {
+			dispatch(addBook(bookObject));
+		}
+		bookResetHandler();
 	};
+
+	// book edit use effect
+	useEffect(() => {
+		// if editableBook no empty then fill up book update form
+		if (editableBook.id) {
+			const { name, author, thumbnail, price, rating, featured } = editableBook;
+			setBookName(name);
+			setAuthor(author);
+			setThumbnail(thumbnail);
+			setPrice(price);
+			setRating(rating);
+			setFeatureBook(featured);
+		}
+	}, [editableBook]);
 
 	return (
 		<div className="p-4 overflow-hidden bg-white shadow-cardShadow rounded-md">
-			<h4 className="mb-8 text-xl font-bold text-center">Add New Book</h4>
+			<h4 className="mb-8 text-xl font-bold text-center">{editableBook.id ? 'Update' : 'Add New'} Book</h4>
 			<form className="book-form" onSubmit={addBookHandler}>
 				<div className="space-y-2">
 					<label htmlFor="name">Book Name</label>
@@ -59,8 +104,8 @@ export default function NewBookForm() {
 						type="text"
 						id="input-Bookthumbnail"
 						name="thumbnail"
-						value={imageUrl}
-						onChange={(e) => setImageUrl(e.target.value)}
+						value={thumbnail}
+						onChange={(e) => setThumbnail(e.target.value)}
 					/>
 				</div>
 
@@ -109,7 +154,7 @@ export default function NewBookForm() {
 				</div>
 
 				<button type="submit" className="submit" id="submit">
-					Add Book
+					{editableBook.id ? 'Update' : 'Add'} Book
 				</button>
 			</form>
 		</div>
