@@ -1,0 +1,16 @@
+{
+	"name": "play-with-redux-toolkit",
+	"version": "1.0.0",
+	"description": "redux",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Zaman",
+	"license": "MIT",
+	"dependencies": {
+		"@reduxjs/toolkit": "^1.9.3",
+		"node-fetch": "^2.6.9",
+		"redux-logger": "^3.0.6"
+	}
+}
