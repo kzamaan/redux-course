@@ -9,14 +9,24 @@ const initialState = {
 };
 
 // thunk function
-const fetchRelatedVideos = createAsyncThunk('relatedVideos/fetchRelatedVideos', async (searchTerm) => {
-	const tags = searchTerm.join('&tags_like=');
-	const response = await fetch(`http://localhost:9000/videos?tags_like=${tags}`);
-	const relatedVideo = await response.json();
+const fetchRelatedVideos = createAsyncThunk(
+	'relatedVideos/fetchRelatedVideos',
+	async (searchTerm, { rejectWithValue }) => {
+		try {
+			const response = await fetch(`http://localhost:9000/videos?tags_like=${searchTerm?.join('&tags_like=')}`);
+			const relatedVideo = await response.json();
 
-	// sort the videos by views
-	return relatedVideo;
-});
+			// sort the videos by views
+			return relatedVideo.sort(function (a, b) {
+				const viewA = parseFloat(a.views.replace('k', ''));
+				const viewB = parseFloat(b.views.replace('k', ''));
+				return viewB - viewA;
+			});
+		} catch (error) {
+			rejectWithValue(error);
+		}
+	}
+);
 
 // create related videos slice
 const relatedVideosSlice = createSlice({
