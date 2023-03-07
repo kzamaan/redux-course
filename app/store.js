@@ -1,12 +1,15 @@
 const { configureStore } = require('@reduxjs/toolkit');
 const { createLogger } = require('redux-logger');
-const videosReducer = require('./../features/videos/videosSlice');
+
+const videoReducer = require('../features/videos/videoSlice');
+const relatedVideosReducer = require('../features/videos/relatedVideoSlice');
 
 const logger = createLogger();
 
 const store = configureStore({
 	reducer: {
-		videos: videosReducer
+		video: videoReducer,
+		relatedVideos: relatedVideosReducer
 	},
 	middleware: (defaultMiddleware) => defaultMiddleware().concat(logger)
 });
