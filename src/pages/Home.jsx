@@ -14,9 +14,13 @@ export default function Home() {
 
 	// decide the content that will be rendered
 	let content = null;
+	// show loading if the posts are loading
 	if (isLoading) content = <div>Loading...</div>;
+	// show error if there is an error
 	if (!isLoading && isError) content = <div>{error}</div>;
+	// show the posts if the posts are loaded
 	if (posts.length > 0 && !isLoading) content = posts.map((post) => <PostCard key={post.id} post={post} />);
+	// show no posts found if the posts are loaded but there are no posts
 	if (posts.length === 0 && !isLoading && !isError) content = <div>No posts found!</div>;
 
 	return (

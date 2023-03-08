@@ -1,20 +1,45 @@
 import PostDescription from 'components/posts/PostDescription';
-import RelatedPost from 'components/posts/RelatedPost';
+import RelatedPosts from 'components/posts/RelatedPosts';
+import { fetchPost } from 'features/post/postSlice';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 
 export default function PostDetail() {
+	const { postId } = useParams();
+	const dispatch = useDispatch();
+	const { post, isLoading, isError, error } = useSelector((state) => state.post);
+
+	useEffect(() => {
+		dispatch(fetchPost(postId));
+	}, [dispatch, postId]);
+
+	// This is the content that will be rendered
+	let content = null;
+	// show loading if the post is loading
+	if (isLoading) content = <div>Loading...</div>;
+	// show error if there is an error
+	if (!isLoading && isError) content = <div className="col-span-12">{error}</div>;
+	// show no post found if the post is not found
+	if (!isLoading && !isError && !post?.id) content = <div className="col-span-12">No post found</div>;
+	// show the post if the post is loaded
+	if (!isLoading && !isError && post?.id) {
+		content = (
+			<>
+				<PostDescription post={post} />
+				<RelatedPosts tags={post.tags} />
+			</>
+		);
+	}
+
 	return (
 		<div>
 			<div className="container mt-8">
-				<a href="index.html" className="inline-block text-gray-600 home-btn" id="lws-goHome">
+				<Link to="/" className="inline-block text-gray-600 home-btn" id="lws-goHome">
 					<i className="mr-2 fa-solid fa-house"></i>Go Home
-				</a>
+				</Link>
 			</div>
-			<section className="post-page-container">
-				{/* <!-- detailed post  --> */}
-				<PostDescription />
-
-				<RelatedPost />
-			</section>
+			<section className="post-page-container">{content}</section>
 		</div>
 	);
 }
