@@ -1,5 +1,4 @@
-import React from 'react';
-import postImage from './../../assets/images/ai.jpg';
+import postImage from 'assets/images/ai.jpg';
 import RelatedPostCard from './RelatedPostCard';
 
 export default function RelatedPost() {

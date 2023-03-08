@@ -1,6 +1,5 @@
-import React from 'react';
+import postImage from 'assets/images/git.webp';
 import { Link } from 'react-router-dom';
-import postImage from './../../assets/images/git.webp';
 
 export default function PostCard() {
 	return (

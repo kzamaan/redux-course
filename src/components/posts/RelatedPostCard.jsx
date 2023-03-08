@@ -1,5 +1,4 @@
-import React from 'react';
-import postImage from './../../assets/images/git.webp';
+import postImage from 'assets/images/git.webp';
 
 export default function RelatedPostCard() {
 	return (

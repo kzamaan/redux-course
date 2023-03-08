@@ -1,5 +1,4 @@
-import React from 'react';
-import postImage from './../../assets/images/mern.webp';
+import postImage from 'assets/images/mern.webp';
 
 export default function PostDescription() {
 	return (

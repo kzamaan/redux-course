@@ -1,6 +1,5 @@
-import React from 'react';
+import logoImage from 'assets/images/LWSBlog.svg';
 import { Link } from 'react-router-dom';
-import logoImage from './../assets/images/LWSBlog.svg';
 
 export default function Navbar() {
 	return (
