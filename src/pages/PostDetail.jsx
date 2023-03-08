@@ -1,6 +1,5 @@
-import React from 'react';
-import PostDescription from '../components/posts/PostDescription';
-import RelatedPost from '../components/posts/RelatedPost';
+import PostDescription from 'components/posts/PostDescription';
+import RelatedPost from 'components/posts/RelatedPost';
 
 export default function PostDetail() {
 	return (
