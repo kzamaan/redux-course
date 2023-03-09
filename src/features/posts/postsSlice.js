@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getPosts } from './postsAPI';
+import { getPosts, updateLikeOnPostById } from './postsAPI';
 
 // initial state
 const initialState = {
@@ -9,11 +9,14 @@ const initialState = {
 	isError: false
 };
 
-// async thunk
-export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-	const posts = await getPosts();
-	return posts;
-});
+// async thunk for fetching posts
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => await getPosts());
+
+// async thunk for adding like on post
+export const addedLikeOnPost = createAsyncThunk(
+	'posts/addedLikeOnPost',
+	async ({ id, likes }) => await updateLikeOnPostById({ id, likes })
+);
 
 // create posts slice
 const postsSlice = createSlice({
@@ -35,6 +38,15 @@ const postsSlice = createSlice({
 				state.isError = true;
 				state.posts = [];
 			});
+
+		// add like on post
+		builder.addCase(addedLikeOnPost.fulfilled, (state, action) => {
+			const { id, likes } = action.payload;
+			const post = state.posts.find((post) => post.id === id);
+			if (post) {
+				post.likes = likes;
+			}
+		});
 	}
 });
 

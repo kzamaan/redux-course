@@ -1,8 +1,16 @@
 import DisplayTags from 'components/ui/DisplayTags';
+import { addedLikeOnPost } from 'features/posts/postsSlice';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export default function PostCard({ post }) {
+	const dispatch = useDispatch();
 	const { id, title, createdAt, tags, likes, image, isSaved } = post || {};
+
+	const handleLikeOnPost = () => {
+		dispatch(addedLikeOnPost({ id, likes }));
+	};
+
 	return (
 		<div className="lws-card">
 			<Link to={`/post/${id}`}>
@@ -11,7 +19,7 @@ export default function PostCard({ post }) {
 			<div className="p-4">
 				<div className="lws-card-header">
 					<p className="lws-publishedDate">{createdAt}</p>
-					<p className="lws-likeCount">
+					<p role="button" onClick={handleLikeOnPost} className="lws-likeCount">
 						<i className="fa-regular fa-thumbs-up"></i>
 						{likes}
 					</p>

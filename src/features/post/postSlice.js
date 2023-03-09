@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getPost } from './postAPI';
+import { getPost, savePostById } from './postAPI';
 
 // initial state
 const initialState = {
@@ -10,10 +10,12 @@ const initialState = {
 };
 
 // async thunk
-export const fetchPost = createAsyncThunk('post/fetchPost', async (id) => {
-	const post = await getPost(id);
-	return post;
-});
+export const fetchPost = createAsyncThunk('post/fetchPost', async (id) => await getPost(id));
+
+export const savePostIntoList = createAsyncThunk(
+	'post/savePostById',
+	async ({ id, isSaved }) => await savePostById({ id, isSaved })
+);
 
 // create post slice
 const postSlice = createSlice({
@@ -35,6 +37,12 @@ const postSlice = createSlice({
 				state.isError = true;
 				state.post = {};
 			});
+
+		// save post into list
+		builder.addCase(savePostIntoList.fulfilled, (state, action) => {
+			const { isSaved } = action.payload;
+			state.post.isSaved = isSaved;
+		});
 	}
 });
 

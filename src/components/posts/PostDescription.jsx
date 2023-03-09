@@ -1,7 +1,14 @@
 import DisplayTags from 'components/ui/DisplayTags';
+import { savePostIntoList } from 'features/post/postSlice';
+import { useDispatch } from 'react-redux';
 
 export default function PostDescription({ post }) {
-	const { title, tags, likes, image, isSaved, description } = post || {};
+	const dispatch = useDispatch();
+	const { id, title, tags, likes, image, isSaved, description } = post || {};
+
+	const handlePostSave = () => {
+		dispatch(savePostIntoList({ id, isSaved }));
+	};
 
 	return (
 		<main className="post">
@@ -17,7 +24,11 @@ export default function PostDescription({ post }) {
 					<button className="like-btn" id="lws-singleLinks">
 						<i className="fa-regular fa-thumbs-up"></i> {likes}
 					</button>
-					<button className={`${isSaved && 'active'} save-btn`} id="lws-singleSavedBtn">
+					<button
+						type="button"
+						onClick={handlePostSave}
+						className={`${isSaved && 'active'} save-btn`}
+						id="lws-singleSavedBtn">
 						<i className="fa-regular fa-bookmark"></i> {isSaved ? 'Saved' : 'Save'}
 					</button>
 				</div>

@@ -1,5 +1,5 @@
 import PostCard from 'components/posts/PostCard';
-import Sidebar from 'components/Sidebar/Sidebar';
+import Sidebar from 'components/sidebar/Sidebar';
 import { fetchPosts } from 'features/posts/postsSlice';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
