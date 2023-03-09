@@ -1,5 +1,5 @@
 import PostCard from 'components/posts/PostCard';
-import Sidebar from 'components/partials/Sidebar';
+import Sidebar from 'components/sidebar/Sidebar';
 import { fetchPosts } from 'features/posts/postsSlice';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ export default function Home() {
 	const dispatch = useDispatch();
 	const { posts, isLoading, isError, error } = useSelector((state) => state.posts);
 
+	// fetch the posts when the component is mounted
 	useEffect(() => {
 		dispatch(fetchPosts());
 	}, [dispatch]);
