@@ -22,6 +22,11 @@ export const savePostIntoList = createAsyncThunk(
 const postSlice = createSlice({
 	name: 'post',
 	initialState,
+	reducers: {
+		updatePostLikeCount: (state, action) => {
+			state.post.likes = action.payload;
+		}
+	},
 	extraReducers: (builder) => {
 		// fetch post
 		builder
@@ -49,3 +54,4 @@ const postSlice = createSlice({
 });
 
 export default postSlice.reducer;
+export const { updatePostLikeCount } = postSlice.actions;

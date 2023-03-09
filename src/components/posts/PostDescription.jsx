@@ -1,5 +1,6 @@
 import DisplayTags from 'components/ui/DisplayTags';
-import { savePostIntoList } from 'features/post/postSlice';
+import { savePostIntoList, updatePostLikeCount } from 'features/post/postSlice';
+import { addedLikeOnPost } from 'features/posts/postsSlice';
 import { useDispatch } from 'react-redux';
 
 export default function PostDescription({ post }) {
@@ -10,6 +11,16 @@ export default function PostDescription({ post }) {
 	// handle save post
 	const handlePostSave = () => {
 		dispatch(savePostIntoList({ id, isSaved }));
+	};
+
+	// handle like post
+	const handlePostLike = () => {
+		dispatch(addedLikeOnPost({ id, likes })).then((data) => {
+			console.log('like added', data);
+			if (data.meta.requestStatus === 'fulfilled') {
+				dispatch(updatePostLikeCount(data.payload.likes));
+			}
+		});
 	};
 
 	return (
@@ -23,7 +34,7 @@ export default function PostDescription({ post }) {
 					<DisplayTags tags={tags} />
 				</div>
 				<div className="btn-group">
-					<button className="like-btn" id="lws-singleLinks">
+					<button type="button" onClick={handlePostLike} className="like-btn" id="lws-singleLinks">
 						<i className="fa-regular fa-thumbs-up"></i> {likes}
 					</button>
 					<button
