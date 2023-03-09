@@ -9,9 +9,10 @@ const initialState = {
 	isError: false
 };
 
-// async thunk
+// async thunk for fetching post
 export const fetchPost = createAsyncThunk('post/fetchPost', async (id) => await getPost(id));
 
+// async thunk for saving post into list
 export const savePostIntoList = createAsyncThunk(
 	'post/savePostById',
 	async ({ id, isSaved }) => await savePostById({ id, isSaved })
@@ -22,6 +23,7 @@ const postSlice = createSlice({
 	name: 'post',
 	initialState,
 	extraReducers: (builder) => {
+		// fetch post
 		builder
 			.addCase(fetchPost.pending, (state) => {
 				state.isError = false;

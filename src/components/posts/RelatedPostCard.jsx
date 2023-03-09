@@ -2,7 +2,9 @@ import DisplayTags from 'components/ui/DisplayTags';
 import { Link } from 'react-router-dom';
 
 export default function RelatedPostCard({ post }) {
+	// destructure post object
 	const { id, title, tags, date, image } = post || {};
+
 	return (
 		<div className="card">
 			<Link to={`/post/${id}`}>

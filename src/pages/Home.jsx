@@ -5,7 +5,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Home() {
+	// get the dispatch function
 	const dispatch = useDispatch();
+	// get the posts from the store
 	const { posts, isLoading, isError, error } = useSelector((state) => state.posts);
 
 	// fetch the posts when the component is mounted

@@ -6,10 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 export default function PostDetail() {
+	// get the post id from the url
 	const { postId } = useParams();
+	// get the dispatch function
 	const dispatch = useDispatch();
+	// get the post from the store
 	const { post, isLoading, isError, error } = useSelector((state) => state.post);
-
+	// fetch the post when the component is mounted
 	useEffect(() => {
 		dispatch(fetchPost(postId));
 	}, [dispatch, postId]);

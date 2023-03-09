@@ -3,9 +3,11 @@ import { savePostIntoList } from 'features/post/postSlice';
 import { useDispatch } from 'react-redux';
 
 export default function PostDescription({ post }) {
+	// get the dispatch function
 	const dispatch = useDispatch();
+	// destructure post object
 	const { id, title, tags, likes, image, isSaved, description } = post || {};
-
+	// handle save post
 	const handlePostSave = () => {
 		dispatch(savePostIntoList({ id, isSaved }));
 	};

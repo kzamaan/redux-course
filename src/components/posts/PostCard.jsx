@@ -4,9 +4,11 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export default function PostCard({ post }) {
+	// get dispatch function from redux
 	const dispatch = useDispatch();
+	// destructure post object
 	const { id, title, createdAt, tags, likes, image, isSaved } = post || {};
-
+	// handle like on post
 	const handleLikeOnPost = () => {
 		dispatch(addedLikeOnPost({ id, likes }));
 	};

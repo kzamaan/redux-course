@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import RelatedPostCard from './RelatedPostCard';
 
 export default function RelatedPosts({ tags, currentPostId }) {
+	// get the dispatch function
 	const dispatch = useDispatch();
-
+	// get the related posts from the store
 	const { posts, isLoading, isError, error } = useSelector((state) => state.relatedPosts);
-
+	// fetch the related posts when the component is mounted
 	useEffect(() => {
 		dispatch(fetchRelatedPosts({ tags, id: currentPostId }));
 	}, [dispatch, tags, currentPostId]);

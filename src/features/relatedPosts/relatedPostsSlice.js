@@ -9,7 +9,7 @@ const initialState = {
 	isError: false
 };
 
-// async thunk
+// async thunk for fetching posts
 export const fetchRelatedPosts = createAsyncThunk(
 	'relatedPosts/fetchRelatedPosts',
 	async ({ tags, id }) => await getRelatedPosts({ tags, id })
