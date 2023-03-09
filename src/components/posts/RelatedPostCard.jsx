@@ -1,19 +1,21 @@
-import postImage from 'assets/images/git.webp';
+import DisplayTags from 'components/ui/DisplayTags';
+import { Link } from 'react-router-dom';
 
-export default function RelatedPostCard() {
+export default function RelatedPostCard({ post }) {
+	const { id, title, tags, date, image } = post || {};
 	return (
 		<div className="card">
-			<a href="post.html">
-				<img src={postImage} className="card-image" alt="" />
-			</a>
+			<Link to={`/post/${id}`}>
+				<img src={image} className="card-image" alt="" />
+			</Link>
 			<div className="p-4">
-				<a href="post.html" className="text-lg post-title lws-RelatedPostTitle">
-					Top Github Alternatives
-				</a>
+				<Link to={`/post/${id}`} className="text-lg post-title lws-RelatedPostTitle">
+					{title}
+				</Link>
 				<div className="mb-0 tags">
-					<span>#python,</span> <span>#tech,</span> <span>#git</span>
+					<DisplayTags tags={tags} />
 				</div>
-				<p>2010-03-27</p>
+				<p>{date}</p>
 			</div>
 		</div>
 	);

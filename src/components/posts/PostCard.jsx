@@ -1,3 +1,4 @@
+import DisplayTags from 'components/ui/DisplayTags';
 import { Link } from 'react-router-dom';
 
 export default function PostCard({ post }) {
@@ -18,7 +19,9 @@ export default function PostCard({ post }) {
 				<Link to={`/post/${id}`} className="lws-postTitle">
 					{title}
 				</Link>
-				<div className="lws-tags">{tags?.length > 0 && tags.map((tag) => <span key={tag}>#{tag},</span>)}</div>
+				<div className="lws-tags">
+					<DisplayTags tags={tags} />
+				</div>
 				<div className="flex gap-2 mt-4">{isSaved && <span className="lws-badge"> Saved </span>}</div>
 			</div>
 		</div>

@@ -1,3 +1,5 @@
+import DisplayTags from 'components/ui/DisplayTags';
+
 export default function PostDescription({ post }) {
 	const { title, tags, likes, image, isSaved, description } = post || {};
 
@@ -9,7 +11,7 @@ export default function PostDescription({ post }) {
 					{title}
 				</h1>
 				<div className="tags" id="lws-singleTags">
-					{tags?.length > 0 && tags.map((tag) => <span key={tag}>#{tag},</span>)}
+					<DisplayTags tags={tags} />
 				</div>
 				<div className="btn-group">
 					<button className="like-btn" id="lws-singleLinks">

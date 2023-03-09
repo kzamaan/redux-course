@@ -27,7 +27,7 @@ export default function PostDetail() {
 		content = (
 			<>
 				<PostDescription post={post} />
-				<RelatedPosts tags={post.tags} />
+				<RelatedPosts tags={post.tags} currentPostId={post.id} />
 			</>
 		);
 	}
