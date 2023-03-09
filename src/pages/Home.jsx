@@ -9,6 +9,7 @@ export default function Home() {
 	const dispatch = useDispatch();
 	// get the posts from the store
 	const { posts, isLoading, isError, error } = useSelector((state) => state.posts);
+	const { filterBy, orderBy } = useSelector((state) => state.filter);
 
 	// fetch the posts when the component is mounted
 	useEffect(() => {
@@ -22,7 +23,23 @@ export default function Home() {
 	// show error if there is an error
 	if (!isLoading && isError) content = <div>{error}</div>;
 	// show the posts if the posts are loaded
-	if (posts.length > 0 && !isLoading) content = posts.map((post) => <PostCard key={post.id} post={post} />);
+	if (posts.length > 0 && !isLoading) {
+		let sortedPosts = [...posts];
+		// filter the posts
+		if (filterBy === 'saved') {
+			sortedPosts = posts.filter((post) => post.isSaved);
+		}
+		// sort the posts by newest
+		if (orderBy === 'newest') {
+			sortedPosts = sortedPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+		}
+		// sort the post by most liked
+		if (orderBy === 'most_liked') {
+			sortedPosts = sortedPosts.sort((a, b) => b.likes - a.likes);
+		}
+		// map the posts to PostCard component
+		content = sortedPosts.map((post) => <PostCard key={post.id} post={post} />);
+	}
 	// show no posts found if the posts are loaded but there are no posts
 	if (posts.length === 0 && !isLoading && !isError) content = <div>No posts found!</div>;
 

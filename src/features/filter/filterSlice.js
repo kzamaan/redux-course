@@ -1,15 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 // initial state
 const initialState = {
-	orderBy: 'default',
+	orderBy: '',
 	filterBy: 'all'
 };
 
 const filterSlice = createSlice({
 	name: 'filter',
 	initialState,
-	reducers: {}
+	reducers: {
+		setOrderBy(state, action) {
+			state.orderBy = action.payload;
+		},
+		setFilterBy(state, action) {
+			state.filterBy = action.payload;
+		}
+	}
 });
 
 export default filterSlice.reducer;
-export const { tagSelected, searchChanged } = filterSlice.actions;
+export const { setOrderBy, setFilterBy } = filterSlice.actions;

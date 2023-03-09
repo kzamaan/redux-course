@@ -1,8 +1,19 @@
-import React from 'react';
+import { setFilterBy } from 'features/filter/filterSlice';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Filter() {
+	// get the dispatch function
+	const dispatch = useDispatch();
+	// get the state from redux store
+	const { filterBy } = useSelector((state) => state.filter);
+	// set the state
+	const [filterInput, setFilterInput] = useState(filterBy);
+
+	// handle order by
 	const handleFilterChange = (e) => {
-		console.log(e.target.value);
+		setFilterInput(e.target.value);
+		dispatch(setFilterBy(e.target.value));
 	};
 	return (
 		<div className="sidebar-content">
@@ -13,14 +24,23 @@ export default function Filter() {
 						type="radio"
 						name="filter"
 						id="lws-all"
-						checked
 						className="radio"
+						checked={filterInput === 'all'}
+						value="all"
 						onChange={handleFilterChange}
 					/>
 					<label htmlFor="lws-all">All</label>
 				</div>
 				<div>
-					<input type="radio" name="filter" id="lws-saved" className="radio" onChange={handleFilterChange} />
+					<input
+						type="radio"
+						name="filter"
+						id="lws-saved"
+						className="radio"
+						checked={filterInput === 'saved'}
+						value="saved"
+						onChange={handleFilterChange}
+					/>
 					<label htmlFor="lws-saved">Saved</label>
 				</div>
 			</div>
