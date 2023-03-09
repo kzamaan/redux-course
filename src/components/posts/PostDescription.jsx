@@ -15,10 +15,12 @@ export default function PostDescription({ post }) {
 
 	// handle like post
 	const handlePostLike = () => {
-		dispatch(addedLikeOnPost({ id, likes })).then((data) => {
-			console.log('like added', data);
-			if (data.meta.requestStatus === 'fulfilled') {
-				dispatch(updatePostLikeCount(data.payload.likes));
+		dispatch(addedLikeOnPost({ id, likes })).then((response) => {
+			console.log(response);
+			if (response.meta.requestStatus === 'fulfilled') {
+				dispatch(updatePostLikeCount(response.payload.likes));
+			} else {
+				alert(response?.error?.message);
 			}
 		});
 	};
