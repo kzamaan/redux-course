@@ -1,5 +1,3 @@
-const fetchTodos = require('./functions');
-
 const actionDelayMiddleware = (store) => (next) => (action) => {
 	if (action.type === 'todo/added') {
 		console.log('I am delaying you');

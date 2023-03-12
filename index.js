@@ -30,7 +30,7 @@ const todoReducer = (state = initialState, action) => {
 	}
 };
 
-const store = createStore(todoReducer, applyMiddleware(thunk.default));
+const store = createStore(todoReducer, applyMiddleware(thunk.default, actionDelayMiddleware));
 
 store.subscribe(() => {
 	console.log(store.getState());
@@ -38,7 +38,7 @@ store.subscribe(() => {
 
 store.dispatch({
 	type: 'todo/added',
-	payload: 'Learn Redux Middleware'
+	payload: true
 });
 
 store.dispatch(fetchTodos);
