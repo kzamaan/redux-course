@@ -1,6 +1,6 @@
+import deleteImage from 'assets/delete.svg';
+import editImage from 'assets/edit.svg';
 import { Link } from 'react-router-dom';
-import deleteImage from '../../assets/delete.svg';
-import editImage from '../../assets/edit.svg';
 
 export default function Description() {
 	return (

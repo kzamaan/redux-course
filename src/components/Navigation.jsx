@@ -1,5 +1,5 @@
+import logo from 'assets/lws.svg';
 import { Link } from 'react-router-dom';
-import logo from '../assets/lws.svg';
 
 export default function Navigation() {
 	return (

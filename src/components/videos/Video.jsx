@@ -1,5 +1,5 @@
+import authorImage from 'assets/author.png';
 import { Link } from 'react-router-dom';
-import authorImage from '../../assets/author.png';
 
 export default function Video() {
 	return (
