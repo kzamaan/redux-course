@@ -1,4 +1,4 @@
-import EditVideo from '../components/edit/EditVideo';
+import EditVideo from 'components/edit/EditVideo';
 
 export default function Edit() {
 	return (

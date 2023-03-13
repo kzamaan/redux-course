@@ -37,7 +37,7 @@ export default function Form() {
 			thumbnail,
 			date,
 			duration,
-			views,
+			views
 		});
 		resetForm();
 	};
@@ -110,7 +110,7 @@ export default function Form() {
 				</div>
 
 				{isSuccess && <Success message="Video was added successfully" />}
-				{isError && <Error message="There was an adding video" />}
+				{isError && <Error message="There was an adding error" />}
 			</div>
 		</form>
 	);
