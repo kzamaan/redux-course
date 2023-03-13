@@ -1,9 +1,9 @@
 import Footer from 'components/Footer';
 import Navigation from 'components/Navigation';
-import Add from 'components/pages/Add';
-import Edit from 'components/pages/Edit';
-import Home from 'components/pages/Home';
-import Video from 'components/pages/Video';
+import Add from 'pages/Add';
+import Edit from 'pages/Edit';
+import Home from 'pages/Home';
+import Video from 'pages/Video';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {

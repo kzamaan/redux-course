@@ -1,4 +1,4 @@
-import AddVideo from '../add/AddVideo';
+import AddVideo from 'components/add/AddVideo';
 
 export default function Add() {
 	return (
