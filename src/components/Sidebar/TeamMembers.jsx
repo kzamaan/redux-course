@@ -8,42 +8,42 @@ import avatarImage1 from 'assets/images/avatars/sumit.png';
 
 export default function TeamMembers() {
 	return (
-		<div class="mt-8">
-			<h3 class="text-xl font-bold">Team Members</h3>
-			<div class="mt-3 space-y-4">
-				<div class="checkbox-container">
-					<img src={avatarImage1} class="team-avater" alt="photo0" />
-					<p class="label">Sumit Saha</p>
+		<div className="mt-8">
+			<h3 className="text-xl font-bold">Team Members</h3>
+			<div className="mt-3 space-y-4">
+				<div className="checkbox-container">
+					<img src={avatarImage1} className="team-avater" alt="photo0" />
+					<p className="label">Sumit Saha</p>
 				</div>
 
-				<div class="checkbox-container">
-					<img src={avatarImage2} class="team-avater" alt="photo1" />
-					<p class="label">Sadh Hasan</p>
+				<div className="checkbox-container">
+					<img src={avatarImage2} className="team-avater" alt="photo1" />
+					<p className="label">Sadh Hasan</p>
 				</div>
 
-				<div class="checkbox-container">
-					<img src={avatarImage3} class="team-avater" alt="photo2" />
-					<p class="label">Akash Ahmed</p>
+				<div className="checkbox-container">
+					<img src={avatarImage3} className="team-avater" alt="photo2" />
+					<p className="label">Akash Ahmed</p>
 				</div>
 
-				<div class="checkbox-container">
-					<img src={avatarImage4} class="team-avater" alt="photo3" />
-					<p class="label">Md Salahuddin</p>
+				<div className="checkbox-container">
+					<img src={avatarImage4} className="team-avater" alt="photo3" />
+					<p className="label">Md Salahuddin</p>
 				</div>
 
-				<div class="checkbox-container">
-					<img src={avatarImage5} class="team-avater" alt="photo4" />
-					<p class="label">Riyadh Hassan</p>
+				<div className="checkbox-container">
+					<img src={avatarImage5} className="team-avater" alt="photo4" />
+					<p className="label">Riyadh Hassan</p>
 				</div>
 
-				<div class="checkbox-container">
-					<img src={avatarImage6} class="team-avater" alt="photo5" />
-					<p class="label">Ferdous Hassan</p>
+				<div className="checkbox-container">
+					<img src={avatarImage6} className="team-avater" alt="photo5" />
+					<p className="label">Ferdous Hassan</p>
 				</div>
 
-				<div class="checkbox-container">
-					<img src={avatarImage7} class="team-avater" alt="photo6" />
-					<p class="label">Arif Almas</p>
+				<div className="checkbox-container">
+					<img src={avatarImage7} className="team-avater" alt="photo6" />
+					<p className="label">Arif Almas</p>
 				</div>
 			</div>
 		</div>
