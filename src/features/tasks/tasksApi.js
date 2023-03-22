@@ -1,6 +1,7 @@
 import { apiSlice } from 'features/api/apiSlice';
 
 export const tasksApi = apiSlice.injectEndpoints({
+	tagTypes: ['Task'],
 	endpoints: (builder) => ({
 		getTasks: builder.query({
 			query: () => '/tasks'
@@ -21,6 +22,12 @@ export const tasksApi = apiSlice.injectEndpoints({
 				);
 			}
 		}),
+
+		getTask: builder.query({
+			query: (taskId) => `/tasks/${taskId}`,
+			providesTags: (result, error, taskId) => [{ type: 'Task', id: taskId }]
+		}),
+
 		updateTask: builder.mutation({
 			query: ({ taskId, data }) => ({
 				url: `/tasks/${taskId}`,
@@ -29,23 +36,44 @@ export const tasksApi = apiSlice.injectEndpoints({
 			}),
 			async onQueryStarted({ taskId, data }, { dispatch, queryFulfilled }) {
 				// optimistic update to the UI
-				const patchResult = dispatch(
-					tasksApi.util.updateQueryData('getTasks', undefined, (draft) => {
-						// find the task in the cache
-						const task = draft.find((t) => t.id === taskId);
-						task.status = data.status;
-					})
-				);
+				let patchResult = null;
+				if (data.status) {
+					patchResult = dispatch(
+						tasksApi.util.updateQueryData('getTasks', undefined, (draft) => {
+							// find the task in the cache
+							const task = draft.find((t) => t.id === taskId);
+							task.status = data.status;
+						})
+					);
+				}
 
 				try {
-					await queryFulfilled;
+					const result = await queryFulfilled;
+
+					// update the cache with the result from the server
+					if (!data.status) {
+						dispatch(
+							tasksApi.util.updateQueryData('getTasks', undefined, (draft) => {
+								// find the task in the cache
+								const task = draft.find((t) => t.id === taskId);
+								const { taskName, project, teamMember, deadline } = result.data;
+								task.taskName = taskName;
+								task.project = project;
+								task.teamMember = teamMember;
+								task.deadline = deadline;
+							})
+						);
+					}
 				} catch (error) {
 					// undo the optimistic update
-					patchResult.undo();
+					if (patchResult) {
+						patchResult.undo();
+					}
 				}
-			}
+			},
+			invalidatesTags: (result, error, { taskId }) => [{ type: 'Task', id: taskId }]
 		})
 	})
 });
 
-export const { useGetTasksQuery, useCreateTaskMutation, useUpdateTaskMutation } = tasksApi;
+export const { useGetTasksQuery, useCreateTaskMutation, useUpdateTaskMutation, useGetTaskQuery } = tasksApi;
