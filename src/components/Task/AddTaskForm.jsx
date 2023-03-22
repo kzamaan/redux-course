@@ -3,9 +3,11 @@ import { useCreateTaskMutation } from 'features/tasks/tasksApi';
 import { teamApi } from 'features/team/teamApi';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddTaskForm() {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	// Get teams and projects from the store
 	const { data: teams } = useSelector(teamApi.endpoints.getTeams.select());
 	const { data: projects } = useSelector(projectsApi.endpoints.getProjects.select());
@@ -39,10 +41,8 @@ export default function AddTaskForm() {
 			teamMember: findTeamMember,
 			project: findProject,
 			deadline,
-			status: 'inProgress'
+			status: 'pending'
 		};
-
-		console.log(newTask);
 
 		// dispatch the addTask action
 		try {
@@ -51,6 +51,7 @@ export default function AddTaskForm() {
 			setTeamMember('');
 			setSelectedProject('');
 			setDeadline('');
+			navigate('/');
 		} catch (error) {
 			console.log(error);
 		}
