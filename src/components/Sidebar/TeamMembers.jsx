@@ -1,51 +1,37 @@
-import avatarImage3 from 'assets/images/avatars/akash.png';
-import avatarImage7 from 'assets/images/avatars/almas.png';
-import avatarImage6 from 'assets/images/avatars/ferdous.png';
-import avatarImage5 from 'assets/images/avatars/riyadh.png';
-import avatarImage2 from 'assets/images/avatars/sadh.png';
-import avatarImage4 from 'assets/images/avatars/salahuddin.png';
-import avatarImage1 from 'assets/images/avatars/sumit.png';
+import { useGetTeamsQuery } from 'features/team/teamApi';
 
 export default function TeamMembers() {
+	const { isLoading, data: teams, isError, error } = useGetTeamsQuery();
+
+	// decide what to render
+	let content = null;
+
+	// show loading spinner
+	if (isLoading) {
+		content = <div>Loading...</div>;
+	}
+	// show error message
+	if (!isLoading && isError) {
+		content = <div>{error}</div>;
+	}
+	// show no team found message
+	if (teams?.length === 0 && !isLoading && !isError) {
+		content = <div>No team member found</div>;
+	}
+	// finally show the team list
+	if (teams?.length > 0 && !isLoading && !isError) {
+		content = teams.map((team) => (
+			<div key={team.id} className="checkbox-container">
+				<img src={team.avatar} className="team-avater" alt={team.name} />
+				<p className="label">{team.name}</p>
+			</div>
+		));
+	}
+
 	return (
 		<div className="mt-8">
 			<h3 className="text-xl font-bold">Team Members</h3>
-			<div className="mt-3 space-y-4">
-				<div className="checkbox-container">
-					<img src={avatarImage1} className="team-avater" alt="photo0" />
-					<p className="label">Sumit Saha</p>
-				</div>
-
-				<div className="checkbox-container">
-					<img src={avatarImage2} className="team-avater" alt="photo1" />
-					<p className="label">Sadh Hasan</p>
-				</div>
-
-				<div className="checkbox-container">
-					<img src={avatarImage3} className="team-avater" alt="photo2" />
-					<p className="label">Akash Ahmed</p>
-				</div>
-
-				<div className="checkbox-container">
-					<img src={avatarImage4} className="team-avater" alt="photo3" />
-					<p className="label">Md Salahuddin</p>
-				</div>
-
-				<div className="checkbox-container">
-					<img src={avatarImage5} className="team-avater" alt="photo4" />
-					<p className="label">Riyadh Hassan</p>
-				</div>
-
-				<div className="checkbox-container">
-					<img src={avatarImage6} className="team-avater" alt="photo5" />
-					<p className="label">Ferdous Hassan</p>
-				</div>
-
-				<div className="checkbox-container">
-					<img src={avatarImage7} className="team-avater" alt="photo6" />
-					<p className="label">Arif Almas</p>
-				</div>
-			</div>
+			<div className="mt-3 space-y-4">{content}</div>
 		</div>
 	);
 }

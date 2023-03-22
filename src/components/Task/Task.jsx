@@ -1,22 +1,41 @@
-import avatarImage1 from 'assets/images/avatars/ferdous.png';
+export default function Task({ task }) {
+	const {
+		taskName,
+		teamMember: { name, avatar } = {},
+		project: { projectName, colorClass } = {},
+		deadline,
+		status
+	} = task || {};
 
-export default function Task() {
+	const dateFormatter = (date) => {
+		const parsedDate = new Date(date);
+		// get day of the month
+		const day = parsedDate.getDate();
+		// get month
+		const month = parsedDate.toLocaleString('default', { month: 'long' });
+		return { day, month };
+	};
+
+	const updateStatusHandler = (e) => {
+		console.log(e.target.value);
+	};
+
 	return (
 		<div className="lws-task">
 			<div className="flex items-center gap-2 text-slate">
-				<h2 className="lws-date">26</h2>
-				<h4 className="lws-month">March</h4>
+				<h2 className="lws-date">{dateFormatter(deadline).day}</h2>
+				<h4 className="lws-month">{dateFormatter(deadline).month}</h4>
 			</div>
 
 			<div className="lws-taskContainer">
-				<h1 className="lws-task-title">Last over need 15 runs</h1>
-				<span className="lws-task-badge color-scoreboard">Scoreboard</span>
+				<h1 className="lws-task-title">{taskName}</h1>
+				<span className={`lws-task-badge ${colorClass}`}>{projectName}</span>
 			</div>
 
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-2">
-					<img src={avatarImage1} className="team-avater" alt="avatar" />
-					<p className="lws-task-assignedOn">Ferdous Hassan</p>
+					<img src={avatar} className="team-avater" alt="avatar" />
+					<p className="lws-task-assignedOn">{name}</p>
 				</div>
 				{/* <!-- delete button will not shown to the ui, until the status of the task will be completed -->
                     <!-- <button className="lws-delete">
@@ -49,10 +68,8 @@ export default function Task() {
 						/>
 					</svg>
 				</button>
-				<select className="lws-status">
-					<option value="pending" selected>
-						Pending
-					</option>
+				<select className="lws-status" value={status} onChange={updateStatusHandler}>
+					<option value="pending">Pending</option>
 					<option value="inProgress">In Progress</option>
 					<option value="complete">Completed</option>
 				</select>
