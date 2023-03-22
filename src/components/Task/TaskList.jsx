@@ -1,5 +1,5 @@
 import { useGetTasksQuery } from 'features/tasks/tasksApi';
-import Task from './Task';
+import TaskItem from './TaskItem';
 
 export default function TaskList() {
 	const { isLoading, data: tasks, isError, error } = useGetTasksQuery();
@@ -21,7 +21,7 @@ export default function TaskList() {
 	}
 	// finally show the tasks list
 	if (tasks?.length > 0 && !isLoading && !isError) {
-		content = tasks.map((task) => <Task key={task.id} task={task} />);
+		content = tasks.map((task) => <TaskItem key={task.id} task={task} />);
 	}
 
 	return <div className="lws-task-list">{content}</div>;

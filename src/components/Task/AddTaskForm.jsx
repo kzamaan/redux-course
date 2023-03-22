@@ -25,10 +25,10 @@ export default function AddTaskForm() {
 
 	// create a new task action creator
 
-	const [createTask, { isLoading, isSuccess: isCreated }] = useCreateTaskMutation();
+	const [createTask, { isLoading }] = useCreateTaskMutation();
 
 	// form submit handler
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		const findTeamMember = teams.find((team) => parseInt(team.id) === parseInt(teamMember));
@@ -45,18 +45,16 @@ export default function AddTaskForm() {
 		console.log(newTask);
 
 		// dispatch the addTask action
-		createTask(newTask);
-	};
-
-	// if the task is created, reset the form
-	useEffect(() => {
-		if (isCreated) {
+		try {
+			await createTask(newTask).unwrap();
 			setTaskName('');
 			setTeamMember('');
 			setSelectedProject('');
 			setDeadline('');
+		} catch (error) {
+			console.log(error);
 		}
-	}, [isCreated]);
+	};
 
 	return (
 		<form className="space-y-6" onSubmit={handleSubmit}>
@@ -69,6 +67,7 @@ export default function AddTaskForm() {
 					required
 					placeholder="Implement RTK Query"
 					onChange={(e) => setTaskName(e.target.value)}
+					value={taskName}
 				/>
 			</div>
 
@@ -118,6 +117,7 @@ export default function AddTaskForm() {
 					id="lws-deadline"
 					required
 					onChange={(e) => setDeadline(e.target.value)}
+					value={deadline}
 				/>
 			</div>
 
