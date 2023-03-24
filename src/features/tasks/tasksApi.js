@@ -7,7 +7,7 @@ export const tasksApi = apiSlice.injectEndpoints({
 		getTasks: builder.query({
 			query: () => '/tasks',
 			async onQueryStarted(data, { dispatch, queryFulfilled }) {
-				// update cache pessimistically
+				// update selected projects in the filter slice
 				try {
 					const result = await queryFulfilled;
 					dispatch(filledSelectedProjects(result.data.map((t) => t.project.projectName)));
