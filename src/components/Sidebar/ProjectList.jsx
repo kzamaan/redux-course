@@ -3,14 +3,16 @@ import { useGetProjectsQuery } from 'features/projects/projectsApi';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function ProjectList() {
-	const { isLoading, data: projectsList, isError } = useGetProjectsQuery();
 	const dispatch = useDispatch();
+	const { isLoading, data: projectsList, isError } = useGetProjectsQuery();
 	const { selectedProjects } = useSelector((state) => state.filter);
 
+	// helper functions
 	const isProjectSelected = ({ projectName }) => {
 		return selectedProjects?.includes(projectName);
 	};
 
+	// event handlers
 	const toggleProjectHandler = ({ projectName }) => {
 		dispatch(updateSelectedProjects(projectName));
 	};

@@ -1,10 +1,12 @@
 import logoImage from 'assets/images/logo.svg';
 import { projectSearchChanged } from 'features/filter/filterSlice';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useMatch, useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const match = useMatch('/');
 
 	// debouncing function
 	const debounce = function (callback, delay) {
@@ -19,6 +21,9 @@ export default function Navbar() {
 
 	const searchHandler = debounce((e) => {
 		dispatch(projectSearchChanged(e.target.value));
+		if (!match) {
+			navigate('/');
+		}
 	}, 300);
 
 	return (
