@@ -1,10 +1,20 @@
 import { apiSlice } from 'features/api/apiSlice';
+import { filledSelectedProjects } from 'features/filter/filterSlice';
 
 export const tasksApi = apiSlice.injectEndpoints({
 	tagTypes: ['Task'],
 	endpoints: (builder) => ({
 		getTasks: builder.query({
-			query: () => '/tasks'
+			query: () => '/tasks',
+			async onQueryStarted(data, { dispatch, queryFulfilled }) {
+				// update cache pessimistically
+				try {
+					const result = await queryFulfilled;
+					dispatch(filledSelectedProjects(result.data.map((t) => t.project.projectName)));
+				} catch (error) {
+					console.log(error);
+				}
+			}
 		}),
 		createTask: builder.mutation({
 			query: (data) => ({

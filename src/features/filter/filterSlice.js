@@ -9,6 +9,9 @@ const filterSlice = createSlice({
 	name: 'filter',
 	initialState,
 	reducers: {
+		filledSelectedProjects(state, action) {
+			state.selectedProjects = action.payload;
+		},
 		updateSelectedProjects(state, action) {
 			const tag = action.payload;
 			if (state.selectedProjects.includes(tag)) {
@@ -24,4 +27,4 @@ const filterSlice = createSlice({
 });
 
 export default filterSlice.reducer;
-export const { updateSelectedProjects, projectSearchChanged } = filterSlice.actions;
+export const { filledSelectedProjects, updateSelectedProjects, projectSearchChanged } = filterSlice.actions;

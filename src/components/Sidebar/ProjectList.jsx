@@ -1,10 +1,15 @@
 import { updateSelectedProjects } from 'features/filter/filterSlice';
 import { useGetProjectsQuery } from 'features/projects/projectsApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function ProjectList() {
 	const { isLoading, data: projectsList, isError } = useGetProjectsQuery();
 	const dispatch = useDispatch();
+	const { selectedProjects } = useSelector((state) => state.filter);
+
+	const isProjectSelected = ({ projectName }) => {
+		return selectedProjects?.includes(projectName);
+	};
 
 	const toggleProjectHandler = ({ projectName }) => {
 		dispatch(updateSelectedProjects(projectName));
@@ -29,7 +34,12 @@ export default function ProjectList() {
 	if (projectsList?.length > 0 && !isLoading && !isError) {
 		content = projectsList.map((project) => (
 			<div key={project.id} className="checkbox-container">
-				<input type="checkbox" className={project.colorClass} onChange={() => toggleProjectHandler(project)} />
+				<input
+					type="checkbox"
+					className={project.colorClass}
+					onChange={() => toggleProjectHandler(project)}
+					checked={isProjectSelected(project)}
+				/>
 				<p className="label">{project.projectName}</p>
 			</div>
 		));
