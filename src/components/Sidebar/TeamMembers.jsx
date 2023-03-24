@@ -1,7 +1,7 @@
 import { useGetTeamsQuery } from 'features/team/teamApi';
 
 export default function TeamMembers() {
-	const { isLoading, data: teams, isError, error } = useGetTeamsQuery();
+	const { isLoading, data: teams, isError } = useGetTeamsQuery();
 
 	// decide what to render
 	let content = null;
@@ -12,7 +12,7 @@ export default function TeamMembers() {
 	}
 	// show error message
 	if (!isLoading && isError) {
-		content = <div>{error}</div>;
+		content = <div>Something went wrong! Please try again later.</div>;
 	}
 	// show no team found message
 	if (teams?.length === 0 && !isLoading && !isError) {

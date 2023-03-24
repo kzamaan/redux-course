@@ -50,8 +50,6 @@ export default function EditTaskForm({ task }) {
 			deadline
 		};
 
-		console.log(updatedTask);
-
 		// dispatch the addTask action
 		try {
 			await updateTask({
