@@ -11,7 +11,7 @@ function App() {
 				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />} />
-					<Route path="/add-new.html" element={<AddNew />} />
+					<Route path="/add-new" element={<AddNew />} />
 					<Route path="/edit/:taskId" element={<EditTask />} />
 				</Routes>
 			</Router>

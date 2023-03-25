@@ -1,8 +1,9 @@
-import { useUpdateTaskMutation } from 'features/tasks/tasksApi';
+import { useDeleteTaskMutation, useUpdateTaskMutation } from 'features/tasks/tasksApi';
 import { Link } from 'react-router-dom';
 
 export default function Task({ task }) {
 	const [updateTask] = useUpdateTaskMutation();
+	const [deleteTask] = useDeleteTaskMutation();
 
 	const {
 		taskName,
@@ -12,6 +13,7 @@ export default function Task({ task }) {
 		status
 	} = task || {};
 
+	// date formatter for deadline
 	const dateFormatter = (date) => {
 		const parsedDate = new Date(date);
 		// get day of the month
@@ -21,6 +23,7 @@ export default function Task({ task }) {
 		return { day, month };
 	};
 
+	// update task status
 	const updateStatusHandler = (e) => {
 		console.log(e.target.value);
 		updateTask({
@@ -31,10 +34,18 @@ export default function Task({ task }) {
 		});
 	};
 
+	// delete task
+	const taskDeleteHandler = () => {
+		if (window.confirm('Are you sure you want to delete this task?')) {
+			deleteTask(task.id);
+		}
+	};
+
+	// decide which button to show based on task status (complete, pending or inProgress)
 	let taskActionButton = null;
 	if (status === 'complete') {
 		taskActionButton = (
-			<button className="lws-delete">
+			<button className="lws-delete" onClick={taskDeleteHandler}>
 				<svg
 					fill="none"
 					viewBox="0 0 24 24"

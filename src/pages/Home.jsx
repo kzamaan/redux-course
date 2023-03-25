@@ -17,7 +17,7 @@ export default function Home() {
 			<div className="lg:pl-[16rem] 2xl:pl-[23rem]">
 				<main className="relative z-20 max-w-3xl mx-auto rounded-lg xl:max-w-none">
 					<div className="justify-between mb-10 space-y-2 md:flex md:space-y-0">
-						<Link to="/add-new.html" className="lws-addnew group">
+						<Link to="/add-new" className="lws-addnew group">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"

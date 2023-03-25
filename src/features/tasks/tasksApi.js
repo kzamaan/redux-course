@@ -82,8 +82,37 @@ export const tasksApi = apiSlice.injectEndpoints({
 				}
 			},
 			invalidatesTags: (result, error, { taskId }) => [{ type: 'Task', id: taskId }]
+		}),
+		deleteTask: builder.mutation({
+			query: (taskId) => ({
+				url: `/tasks/${taskId}`,
+				method: 'DELETE'
+			}),
+			async onQueryStarted({ taskId, data }, { dispatch, queryFulfilled }) {
+				// optimistic update to the UI
+				let patchResult = dispatch(
+					tasksApi.util.updateQueryData('getTasks', undefined, (draft) => {
+						// find the task in the cache and remove it
+						const taskIndex = draft.findIndex((t) => t.id === taskId);
+						draft.splice(taskIndex, 1);
+					})
+				);
+
+				try {
+					await queryFulfilled;
+				} catch (error) {
+					// undo the optimistic update
+					patchResult.undo();
+				}
+			}
 		})
 	})
 });
 
-export const { useGetTasksQuery, useCreateTaskMutation, useUpdateTaskMutation, useGetTaskQuery } = tasksApi;
+export const {
+	useGetTasksQuery,
+	useCreateTaskMutation,
+	useUpdateTaskMutation,
+	useGetTaskQuery,
+	useDeleteTaskMutation
+} = tasksApi;
